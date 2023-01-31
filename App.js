@@ -1,13 +1,13 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, TextInput, Button, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, TextInput, Button, Text, Pressable} from 'react-native';
 
 
-const RequestRide = () => {
+const RequestRide = (props) => {
   const [from, onChangeFrom] = React.useState('');
   const [to, onChangeTo] = React.useState('');
   const [time, onChangeTime] = React.useState('');
   const [notes, onChangeNotes] = React.useState('');
- 
+  const onPress = props;
 
 
 
@@ -57,7 +57,11 @@ const RequestRide = () => {
         keyboardType="string"
       />
   
-      
+      <Pressable 
+        style={styles.button} 
+        onPress={onPress}>
+       <Text style={styles.text}>Save</Text>
+      </Pressable>
 
     </SafeAreaView>
   );
@@ -75,12 +79,30 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     padding: 15,
+    color:'#1853AB',
   },
   notes: {
     height: 120,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  button: {
+    height: 40,
+    marginTop: 40,
+    margin: 15,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#1853AB',
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
