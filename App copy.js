@@ -1,21 +1,33 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, TextInput, Button, Text, Pressable} from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+function MainContent() {
+  return (
+    <View style={styles.mainBackground}>
+      <Text style={styles.main}>Home Screen</Text>
+    </View>
+  );
+}
 
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home</Text>
+    </View>
+  );
+}
 
 const RequestRide = (props) => {
+
   const [from, onChangeFrom] = React.useState('');
   const [to, onChangeTo] = React.useState('');
   const [time, onChangeTime] = React.useState('');
   const [notes, onChangeNotes] = React.useState('');
   const onPress = props;
-
-
-
   return (
-    <SafeAreaView>
-      <Text style={styles.title}>
-          REQUEST RIDE PAGE
-        </Text>
+    <View>
       <Text style={styles.title}>
           From
         </Text>
@@ -62,12 +74,32 @@ const RequestRide = (props) => {
         onPress={onPress}>
        <Text style={styles.text}>Save</Text>
       </Pressable>
-
-    </SafeAreaView>
+    </View>
   );
-};
+}
+const Tab = createBottomTabNavigator();
+
+function App() {
+  return (
+    <NavigationContainer >
+      <Tab.Navigator>
+        <Tab.Screen name="MAIN" component={HomeScreen} />
+        <Tab.Screen name="REQUEST RIDE" component={RequestRide} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+
 
 const styles = StyleSheet.create({
+  main: {
+    color: '#1853AB'
+  },
+  mainBackground: {
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center' 
+  },
   input: {
     height: 40,
     margin: 12,
@@ -105,5 +137,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default RequestRide;
+export default App;
