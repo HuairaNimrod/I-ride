@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-function Screen2() {
+function Rides() {
   return (
     <View>
-      <Text>Screen 2</Text>
+      <Text>Ride Screen</Text>
     </View>
   );
 }
 
-export default Screen2;
+export default Rides;

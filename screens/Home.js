@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-function Screen1() {
+function Home() {
   return (
     <View>
-      <Text>Screen 1</Text>
+      <Text>Home Screen</Text>
     </View>
   );
 }
 
-export default Screen1;
+export default Home;

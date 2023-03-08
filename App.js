@@ -1,23 +1,18 @@
-import React from 'react';
-import { Image } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import Screen1 from './screens/Home';
-import Screen2 from './screens/Rides'; 
-import Profile from './screens/Profile';
+import { StyleSheet, View } from 'react-native';
+import Navigation from './components/Navigation';
 
-const Tab = createBottomTabNavigator();
 
-function App() {
+export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Screen1} />
-        <Tab.Screen name="Rides" component={Screen2} />
-        <Tab.Screen name="Profile" component={Profile} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Navigation/>
+    </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({ //deleting this shrink the app :(
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
