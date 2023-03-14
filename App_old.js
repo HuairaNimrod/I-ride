@@ -44,6 +44,7 @@ const RequestRide = (props) => {
       <TextInput
         style={styles.input}
         onChangeText={onChangeTo}
+        
         value={to}
         placeholder="end point"
         keyboardType="string"
