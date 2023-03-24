@@ -1,34 +1,71 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Pressable, FlatList, Button, Alert } from 'react-native'
-import {firebase} from '../config'
-import { Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, FlatList, Button, Alert } from 'react-native';
+import {db} from '../config'
+import { useNavigation } from '@react-navigation/native';
+import { collection, getDocs, where, query } from "firebase/firestore"; 
+import {getAuth, currentUser, signOut, onAuthStateChanged} from "firebase/auth";
 
+
+
+
+// const Fetch = () =>{
+
+//   const [users, setUsers] = useState([]);
+//   const auth = getAuth();
+//   const navigation = useNavigation();
+
+  
+
+//   useEffect(() => {
+//     async function fetchData(){
+//       const q = query(collection(db, "user"), where("uid", "==", auth.currentUser?.uid));
+//       const user = [] 
+//       const querySnapshot = await getDocs(q);
+//         querySnapshot.forEach((doc) => {
+//           // doc.data() is never undefined for query doc snapshots
+          
+//           user.push({
+//             id: doc.id,
+//             firstName,
+//             lastName,
+//             phone,
+//             email,
+//             password
+//           })
+//         });
+   
+//           setUsers(user)
+//               }
+//       fetchData();      
+//   }, []);
+
+// 
 
 const Fetch = () =>{
 
   const [users, setUsers] = useState([]);
-  const todoRef = firebase.firestore().collection('user');
-
+  const auth = getAuth();
   useEffect(() => {
     async function fetchData(){
-            todoRef
-            .onSnapshot(
-              querySnapshot =>{
-                const users = []
-                querySnapshot.forEach((doc)=>{
-                  const { email, firstName, lastName, username, phoneNumber} = doc.data()
-                  users.push({
-                    id: doc.id,
-                    email,
-                    firstName,
-                    lastName,
-                    username,
-                    phoneNumber
-                  })
-                })
-                setUsers(users)
-              }
-            )
+          const q = query(collection(db, "user"), where("uid", "==", auth.currentUser?.uid));
+          const querySnapshot = await getDocs(q);
+           
+         
+          const users = []
+          querySnapshot.forEach((doc)=>{
+            const { email, firstName, lastName, username, phoneNumber} = doc.data()
+            users.push({
+              id: doc.id,
+              email,
+              firstName,
+              lastName,
+              username,
+              phoneNumber
+            })
+          })
+          setUsers(users)
+              
+            
       }
       fetchData();      
   }, []);

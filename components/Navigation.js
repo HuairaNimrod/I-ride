@@ -5,12 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 import Home from '../screens/Home';
 import Rides from '../screens/Rides';
 import Profile from '../screens/Profile';
+// import Login from '../screens/Login'
+// import Register from '../screens/Register'
 
 const Tab = createBottomTabNavigator();
 
 function Navigation() {
   return (
-    <NavigationContainer>
+    
         <Tab.Navigator>
             <Tab.Screen
                 name="Home"
@@ -39,8 +41,18 @@ function Navigation() {
                 ),
                 }}
             />
+            {/* <Tab.Screen
+                name="Login"
+                component={Login}
+    
+            />
+            <Tab.Screen
+                name="Register"
+                component={Register}
+    
+            /> */}
         </Tab.Navigator>
-    </NavigationContainer>
+
     );
   
 }
