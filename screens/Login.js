@@ -16,7 +16,7 @@ const Login = () => {
           if (user) {
             
             const uid = user.uid;
-            //navigation.navigate('Navigation')
+           
             
           } });
         return unSubscribe
@@ -28,11 +28,10 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            // if (userCredential.user.emailVerified) {
-            //     navigation.navigate('Navigation')
-            // }
-            navigation.navigate('Navigation')
-            
+            if (user.emailVerified) {
+                navigation.navigate('Navigation')
+            }
+         
     })
     
     .catch((error) => {

@@ -61,22 +61,15 @@ const Register = () => {
         const auth = getAuth();
         
         
-        
-        const userCredential = createUserWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
             const uid = user.uid;
-            
+            sendEmailVerification(auth.currentUser)
            handleAddUser(uid);
            navigation.navigate('Login')
-           //userCredential.user.sendEmailVerification();
-           
-          
-          
-          
-  
-            // ...
+      
           })
           .catch((error) => {
             const errorCode = error.code;
