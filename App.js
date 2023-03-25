@@ -15,4 +15,11 @@ const styles = StyleSheet.create({ //deleting this shrink the app :(
     flex: 1,
     backgroundColor: '#fff',
   },
+
+  topText: {
+    margin: 16,
+    padding: 16,
+    borderWidth: 2,
+    borderColor: 'blue',
+  }
 });
