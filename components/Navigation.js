@@ -5,8 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Home from '../screens/Home';
 import Rides from '../screens/Rides';
 import Profile from '../screens/Profile';
-// import Login from '../screens/Login'
-// import Register from '../screens/Register'
+import { nodeModuleNameResolver } from 'typescript';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -17,10 +17,12 @@ function Navigation() {
             <Tab.Screen
                 name="Home"
                 component={Home}
+              
                 options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="ios-home" color={color} size={size} />
                 ),
+                headerShown: false
                 }}
             />
             <Tab.Screen
@@ -30,15 +32,18 @@ function Navigation() {
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="ios-list" color={color} size={size} />
                 ),
+                headerShown: false
                 }}
             />
                  <Tab.Screen
                 name="Profile"
                 component={Profile}
+                
                 options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="ios-person" color={color} size={size} />
                 ),
+                headerShown: false
                 }}
             />
             {/* <Tab.Screen

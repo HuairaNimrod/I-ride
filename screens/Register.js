@@ -1,16 +1,18 @@
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, View, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {db} from '../config'
-import { collection, addDoc } from "firebase/firestore"; 
-import { getAuth, createUserWithEmailAndPassword,  onAuthStateChanged} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; 
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification,  onAuthStateChanged} from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 
 
 const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [username, setUsername] = useState('')
     const [phone, setPhone] = useState('')
    
 
@@ -27,40 +29,52 @@ const Register = () => {
 
     }, [])
     const handleAddUser = async (uid) => {
+     
+      await setDoc(doc(db, "user", uid), {
+        firstName,
+        lastName,
+        username,
+        phone,
+        email,
+        password
+      });
   
-      const docRef = await addDoc(collection(db, "user"), {
-          uid,
-          firstName,
-          lastName,
-          phone,
-          email,
-          password
-        });
-      
+    
       
           }
     
     const handleSignUp = async () => {
-    
-        
+        if (firstName.trim() === '' || lastName.trim() === '' || username.trim() === '' || phone.trim() === '' || email.trim() === '' || password.trim() === '') {
+        alert('Please complete all fields');
+        return;
+        }
+        if (password.trim() != confirmPassword) {
+          alert('Please check that your passwords are matching');
+          return;
+          }
+        if (!email.endsWith('@byui.edu')) {
+            alert('Please make sure that you are using your school email account');
+            return;
+          }
+        alert('A verification email has been sent to your email address. It may take a few minutes. Please verify your email before logging in.');
+          
         const auth = getAuth();
         
-            
-        createUserWithEmailAndPassword(auth, email, password)
+        
+        
+        const userCredential = createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
             const uid = user.uid;
-            const docRef = addDoc(collection(db, "user"), {
-              uid,
-              firstName,
-              lastName,
-              phone,
-              email,
-              password
-            });
+            
+           handleAddUser(uid);
+           navigation.navigate('Login')
+           //userCredential.user.sendEmailVerification();
+           
           
-           navigation.navigate('Navigation')
+          
+          
   
             // ...
           })
@@ -91,6 +105,12 @@ const Register = () => {
             style = {styles.input}
             />
             <TextInput 
+            placeholder='Username' 
+            //value={ }
+            onChangeText = {text => setUsername(text)}
+            style = {styles.input}
+            />
+            <TextInput 
             placeholder='Phone Number' 
             //value={ }
             onChangeText = {text => setPhone(text)}
@@ -106,6 +126,13 @@ const Register = () => {
             placeholder='Password' 
             //value={ }
             onChangeText = {text => setPassword(text)}
+            style = {styles.input}
+            secureTextEntry
+            />
+            <TextInput 
+            placeholder='Confirm Password' 
+            //value={ }
+            onChangeText = {text => setConfirmPassword(text)}
             style = {styles.input}
             secureTextEntry
             />
@@ -158,23 +185,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    buttonOutline :{
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
-    },
+    
     buttonText: {
         color: 'white',
         fontWeight: '700',
         fontSize: 16,
     },
-    buttonOutlineText : {
-        backgroundColor: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-        color: '#0782F9',
-
-    }
+    
     
 })

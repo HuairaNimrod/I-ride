@@ -1,8 +1,9 @@
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, View, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
-import { useNavigation } from '@react-navigation/native';
+
 
 
 const Login = () => {
@@ -27,13 +28,19 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
+            // if (userCredential.user.emailVerified) {
+            //     navigation.navigate('Navigation')
+            // }
             navigation.navigate('Navigation')
-            // ...
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-          });
+            
+    })
+    
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+           
+         
     }
     
   return (

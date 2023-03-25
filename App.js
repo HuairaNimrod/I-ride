@@ -1,9 +1,12 @@
 import { StyleSheet, View } from 'react-native';
 import Navigation from './components/Navigation';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './screens/Login';
-import Register from './screens/Register'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import LoginScreen from './screens/Login';
+import Register from './screens/Register';
+import editProfile from './src/editProfile'
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -15,6 +18,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name = "Login" component={LoginScreen} />
         <Stack.Screen  name="Register" component={Register} />
         <Stack.Screen options={{headerShown: false}} name="Navigation" component={Navigation} />
+        <Stack.Screen name="Edit" component={editProfile} />
       </Stack.Navigator>
     </NavigationContainer>
  
