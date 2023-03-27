@@ -7,6 +7,7 @@ function Rides() {
     <View>
       <FetchRides/>
     </View>
+
   );
 }
 
