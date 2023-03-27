@@ -66,7 +66,7 @@ const Register = () => {
             // Signed in 
             const user = userCredential.user;
             const uid = user.uid;
-            sendEmailVerification(auth.currentUser)
+            // sendEmailVerification(auth.currentUser)
            handleAddUser(uid);
            navigation.navigate('Login')
       

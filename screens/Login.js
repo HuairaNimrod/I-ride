@@ -28,9 +28,9 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            if (user.emailVerified) {
-                navigation.navigate('Navigation')
-            }
+            // if (user.emailVerified) {
+            //     navigation.navigate('Navigation')
+            // }
          
     })
     
