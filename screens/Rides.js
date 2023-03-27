@@ -1,11 +1,13 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { View, Text } from 'react-native';
+import FetchRides from '../src/fetchRideInfo';
 
 function Rides() {
   return (
-    <SafeAreaView>
-      <Text>Ride Screen</Text>
-    </SafeAreaView>
+    <View>
+      <FetchRides/>
+    </View>
+
   );
 }
 
