@@ -1,23 +1,33 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Pressable, Alert } from 'react-native';
 import {db} from '../config'
-import { getDoc, doc } from "firebase/firestore"; 
+import { getDoc, doc, updateDoc} from "firebase/firestore"; 
 import {getAuth} from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
-import Edit from './editProfile';
 
 
-const Fetch = () =>{
 
+const Edit = () =>{
   const navigation = useNavigation()
-  const [email, setEmail] = useState('')
+  
+  
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
   const [username, setUsername] = useState('')
   const auth = getAuth();
+  async function HandleEditData(){
+    const docRef = doc(db, "user", auth.currentUser?.uid);
+
+       
+    await updateDoc(docRef, { firstName, lastName, phone, username })
+    .then(
+        navigation.navigate('Profile')
+    )
+    
+  }
   useEffect(() => {
-    async function fetchData(){
+    async function FetchData(){
           
           const documentRef = doc(db, "user", auth.currentUser?.uid);
 
@@ -27,7 +37,6 @@ const Fetch = () =>{
               if (docSnapshot.exists()) {
                 // Access the document data using the data() method and set data
                 const data = docSnapshot.data();
-                setEmail(data.email)
                 setFirstName(data.firstName)
                 setLastName(data.lastName)
                 setPhone(data.phone)
@@ -43,48 +52,49 @@ const Fetch = () =>{
               
             
       }
-      fetchData();    
+      FetchData();    
       
   }, []);
 
   return(
     <View style={styles.container}>
           
-      <View> 
+      <View style={styles.personal}> 
           <Image source={require('../images/sqare.png')} style={styles.circle}/>
           <Text style={styles.header}>@{username}</Text>
-          <Pressable 
-              style={({pressed}) => [ //allows to modify the style in an action (onPress)
-                    {
-                      backgroundColor: pressed 
-                                  ? '#1853AB' 
-                                  : 'white',
-                    },
-                    styles.button,
-                  ]}
-              // onPress={() => Alert.alert('Edit profile under construction')}
-              onPress = {() => navigation.navigate(Edit)}>
-
-          {({ pressed }) => (
-              <Text
-                  style={[
-                      {
-                          color: pressed
-                              ? 'white'
-                              : '#1853AB'
-                      },
-                      styles.buttonText,
-                  ]}>
-                  Edit Profile
-              </Text>
-      )}
-          </Pressable>
-         
-          <Text style={styles.title}>Personal Information </Text>
-          <Text style={styles.info}>{firstName} {lastName}</Text>
-          <Text style={styles.info}>{email}</Text>
-          <Text style={styles.info}>{phone}</Text>
           
+         
+          <Text style={styles.title}>Edit Personal Information </Text>
+          <TextInput 
+            placeholder= {username}
+            value={username}
+            onChangeText = {text => setUsername(text)}
+            style = {styles.input}
+            />
+          <TextInput 
+            placeholder= {firstName}
+            value={firstName}
+            onChangeText = {text => setFirstName(text)}
+            style = {styles.input}
+            />
+            <TextInput 
+            placeholder={lastName}
+            value={lastName}
+            onChangeText = {text => setLastName(text)}
+            style = {styles.input}
+            />
+            <TextInput 
+            placeholder={phone}
+            value={phone}
+            onChangeText = {text => setPhone(text)}
+            style = {styles.input}
+            />
+             <TouchableOpacity
+            onPress = {HandleEditData}
+            style ={[styles.changeButton]}>
+                <Text style={[styles.changeButton, styles.changeButtonText]}>Save Changes</Text>
+            </TouchableOpacity>
+       
       </View>
     
     </View>
@@ -93,7 +103,7 @@ const Fetch = () =>{
 
 }
 
-export default Fetch;
+export default Edit;
 
 
 
@@ -129,6 +139,11 @@ const styles = StyleSheet.create({
      color:'gray',
      textAlign: 'center',
    },
+   personal: {
+    alignItems: 'center',
+    flex: 1,
+   },
+   
    title:{
      
     fontSize: 15,
@@ -145,6 +160,31 @@ const styles = StyleSheet.create({
      paddingBottom: 5,
      color:'#1853AB',
    },
+   input: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginTop: 5,
+    width: '80%',
+    marginBottom: 5,
+},
+changeButton : {
+    backgroundColor: '#0702F9',
+    width: 200,
+    padding: 7,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+
+changeButtonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+    textAlign: 'center',
+    border: 10,
+},
    
  
  })

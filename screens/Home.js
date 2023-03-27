@@ -21,6 +21,7 @@ function Home() {
 
   return (
     <SafeAreaView>
+
       <View style={styles.topBox}>
         <Text
           style={{
