@@ -6,21 +6,33 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
-  TouchableOpacity
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 function Home() {
-  const [pressed, setPressed] = useState(false);
+  const [requestPressed, setRequestPressed] = useState(false);
+  const [offerPressed, setOfferPressed] = useState(false);  
   const navigation = useNavigation();
 
-  const handlePressIn = (location) => {
-    navigation.navigate(location);
-    setPressed(true);
+  const handleRequestPressIn = () => {
+    navigation.navigate('Request');
+    setRequestPressed(true);
   };
 
-  const handlePressOut = () => {
-    setPressed(false);
+  const handleRequestPressOut = () => {
+    setRequestPressed(false);
+  };
+
+  const handleOfferPressIn = () => {
+    // Handle the "Offer a Ride" touchable being pressed. Replace "Rides" with the OfferRide page.
+    // navigation.navigate('Rides');
+    navigation.navigate('Offer');
+    setOfferPressed(true);
+  };
+
+  const handleOfferPressOut = () => {
+    // Handle the "Offer a Ride" touchable being released
+    setOfferPressed(false);
   };
 
   return (
@@ -37,18 +49,18 @@ function Home() {
         >
           With I-Ride
         </Text>
-        <Text style={{ color: "blue" }}>You decided where to go to</Text>
+        <Text style={{ color: "blue" }}>You Decide Where To Go! </Text>
       </View>
       <View style={styles.iconsContainer}>
         <TouchableWithoutFeedback
-          onPressIn={() => handlePressIn('Request')}
-          onPressOut={handlePressOut}
+          onPressIn={handleRequestPressIn}
+          onPressOut={handleRequestPressOut}
         >
           <View>
             <Image
               style={[
                 styles.icons,
-                pressed && {
+                requestPressed && {
                   backgroundColor: "#F79F9F",
                   borderWidth: 2,
                   borderColor: "#B90000",
@@ -59,15 +71,25 @@ function Home() {
             <Text style={styles.iconsCaption}>Request a Ride</Text>
           </View>
         </TouchableWithoutFeedback>
+
         <TouchableWithoutFeedback
-        onPressIn={() => handlePressIn('Offer')}>
-        <View>
-          <Image
-            style={styles.icons}
-            source={require("../images/street2.png")}
-          />
-          <Text style={styles.iconsCaption}>Offer a Ride</Text>
-        </View>
+          onPressIn={handleOfferPressIn}
+          onPressOut={handleOfferPressOut}
+        >
+          <View>
+            <Image
+              style={[
+                styles.icons,
+                offerPressed && {
+                  backgroundColor: "#F79F9F",
+                  borderWidth: 2,
+                  borderColor: "#B90000",
+                },
+              ]}
+              source={require("../images/street2.png")}
+            />
+            <Text style={styles.iconsCaption}>Offer a Ride</Text>
+          </View>
         </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>
