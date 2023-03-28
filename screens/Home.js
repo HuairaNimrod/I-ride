@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
+  TouchableOpacity
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,8 +14,8 @@ function Home() {
   const [pressed, setPressed] = useState(false);
   const navigation = useNavigation();
 
-  const handlePressIn = () => {
-    navigation.navigate('RequestRide');
+  const handlePressIn = (location) => {
+    navigation.navigate(location);
     setPressed(true);
   };
 
@@ -36,11 +37,11 @@ function Home() {
         >
           With I-Ride
         </Text>
-        <Text style={{ color: "blue" }}>You Decided to go to: </Text>
+        <Text style={{ color: "blue" }}>You decided where to go to</Text>
       </View>
       <View style={styles.iconsContainer}>
         <TouchableWithoutFeedback
-          onPressIn={handlePressIn}
+          onPressIn={() => handlePressIn('Request')}
           onPressOut={handlePressOut}
         >
           <View>
@@ -58,13 +59,16 @@ function Home() {
             <Text style={styles.iconsCaption}>Request a Ride</Text>
           </View>
         </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+        onPressIn={() => handlePressIn('Offer')}>
         <View>
           <Image
             style={styles.icons}
             source={require("../images/street2.png")}
           />
-          <Text>Offer a Ride</Text>
+          <Text style={styles.iconsCaption}>Offer a Ride</Text>
         </View>
+        </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>
   );

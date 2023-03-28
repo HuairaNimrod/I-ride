@@ -6,29 +6,39 @@ import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 
 
-const RequestRide  = () => {
+const Offer  = () => {
     const auth = getAuth();
-    const [startingPoint, setStartingPoint] = useState('')
+    const [startingpoint, setStartingpoint] = useState('')
     const [destination, setDestination] = useState('')
     const [time, setTime] = useState('')
     const [date, setDate] = useState('')
+    const [price, setPrice] = useState('')
     const [notes, setNotes] = useState('')
     
 
     const navigation = useNavigation()
-    const handleRequestRide = async () => {
+
+    const handlePrice = (text) => {
+        // Only allow input of decimal numbers
+        if (/^\d*\.?\d*$/.test(text)) {
+          setPrice(text);
+        }
+      };
+    
+    const handleOffer = async () => {
        
         const user = auth.currentUser?.uid
         const docRef = await addDoc(collection(db, "trip"), {
             user,
-            startingPoint,
+            startingpoint,
             destination,
             time,
             date,
+            price,
             notes,
             complete : false,
             creationDateTime: new Date(),
-            rideType: 'request'
+            rideType: 'offered'
 
             
           });
@@ -42,35 +52,44 @@ const RequestRide  = () => {
     style={styles.container}
     behavior="padding">
         <View style={styles.inputContainer}>
-            <Text>From</Text>
+            <Text style={styles.label}>From</Text>
             <TextInput 
-            placeholder='Manwaring' 
+            placeholder='Rexburg' 
             //value={ }
-            onChangeText = {text => setStartingPoint(text)}
+            onChangeText = {text => setStartingpoint(text)}
             style = {styles.input}
             />
-            <Text>To</Text>
+            <Text style={styles.label}>To</Text>
             <TextInput 
-            placeholder='Fat Cats - Rexburg' 
+            placeholder='Provo' 
             //value={ }
             onChangeText = {text => setDestination(text)}
             style = {styles.input}
             />
-            <Text>Time</Text>
+            <Text style={styles.label}>Time</Text>
             <TextInput 
             placeholder='12:25' 
             //value={ }
             onChangeText = {text => setTime(text)}
             style = {styles.input}
             />
-            <Text>Date</Text>
+            <Text style={styles.label}>Date</Text>
             <TextInput 
             placeholder='04/01/2023' 
             
             onChangeText = {text => setDate(text)}
             style = {styles.input}
             />
-            <Text>Comments</Text>
+            <Text style={styles.label}>To</Text>
+            <TextInput 
+            placeholder='$20'
+            
+            value={price}
+            onChangeText={handlePrice}
+            keyboardType="decimal-pad"
+            style = {styles.input}
+            />
+            <Text style={styles.label}>Comments</Text>
             <TextInput 
             placeholder='Type your message here...' 
             //value={ }
@@ -85,10 +104,10 @@ const RequestRide  = () => {
         </View>
         <View>
             <TouchableOpacity
-            onPress = {handleRequestRide}
+            onPress = {handleOffer}
             
             style ={[styles.button]}>
-                <Text style={[styles.button, styles.buttonText]}>Request</Text>
+                <Text style={[styles.button, styles.buttonText]}>Offer</Text>
             </TouchableOpacity>
 
         </View>
@@ -96,7 +115,7 @@ const RequestRide  = () => {
   )
 }
 
-export default RequestRide
+export default Offer
 
 const styles = StyleSheet.create({
     container : {
@@ -108,6 +127,15 @@ const styles = StyleSheet.create({
         width: '90%',
 
     }, 
+    label: {
+        color: '#0702F9',
+        fontWeight: "500",
+        fontSize: 16,
+        padding: 5,
+        paddingTop: 10,
+        
+
+    },
     input: {
         backgroundColor: 'white',
         paddingHorizontal: 15,
@@ -124,12 +152,12 @@ const styles = StyleSheet.create({
     },
     button : {
         backgroundColor: '#0702F9',
-        width: '90%',
+        width: 200,
         padding: 7,
         borderRadius: 10,
-
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
     },
     
     buttonText: {

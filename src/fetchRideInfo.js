@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Pressable, FlatList, Button, Alert, Array } from 'react-native'
+import { View, Text, StyleSheet, Pressable, FlatList, Button, Alert, Array, SafeAreaView } from 'react-native'
 import {firebase} from '../config';
 
 
@@ -33,7 +33,7 @@ const FetchRides = () =>{
   }, []);
 
   return(
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
           <FlatList
               // style={styles.list}
               data={trip}
@@ -45,7 +45,7 @@ const FetchRides = () =>{
                     <Text style={styles.title}>Route </Text>
                     <Text style={styles.info}>{item.startingpoint} - {item.destination}</Text>
                     <Text style={styles.title}>Price </Text>
-                    <Text style={styles.info}>{item.price}</Text>
+                    <Text style={styles.info}>${item.price}</Text>
 
                     {/* <Text style={styles.title}>Date </Text>
 
@@ -56,7 +56,7 @@ const FetchRides = () =>{
               )}
 
           />
-    </View>
+    </SafeAreaView>
   )
 
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   borderColor: '#1853AB'
  },
  listResquested:{
-  backgroundColor: 'rgba(255, 93, 133, 1.0)',
+  backgroundColor: '#E68992',
   padding: 10,
   margin: 10,
   borderRadius: 15,

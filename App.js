@@ -6,7 +6,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/Login';
 import Register from './screens/Register';
 import editProfile from './src/editProfile';
-import RequestRide from './screens/RequestRide';
+import Request from './screens/Request';
+import Offer from './screens/Offer';
+import Confirm from './screens/Confirm';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +22,9 @@ export default function App() {
         <Stack.Screen  name="Register" component={Register} />
         <Stack.Screen options={{headerShown: false}} name="Navigation" component={Navigation} />
         <Stack.Screen name="Edit" component={editProfile} />
-        <Stack.Screen name="RequestRide" component={RequestRide} />
+        <Stack.Screen name="Request" component={Request} />
+        <Stack.Screen name="Offer" component={Offer} />
+        <Stack.Screen name="Confirm" component={Confirm} />
       </Stack.Navigator>
     </NavigationContainer>
  
