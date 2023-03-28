@@ -31,6 +31,7 @@ const Login = () => {
             // if (user.emailVerified) {
             //     navigation.navigate('Navigation')
             // }
+            navigation.navigate('Navigation')
          
     })
     

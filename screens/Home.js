@@ -7,11 +7,14 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 function Home() {
   const [pressed, setPressed] = useState(false);
+  const navigation = useNavigation();
 
   const handlePressIn = () => {
+    navigation.navigate('RequestRide');
     setPressed(true);
   };
 
