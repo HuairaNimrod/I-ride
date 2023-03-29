@@ -1,21 +1,40 @@
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, View, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, {useState, useEffect} from 'react'
+import {db} from '../config'
+import {addDoc, collection } from "firebase/firestore"; 
 import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 
 
-const Confirm  = () => {
+
+const ConfirmRequest  = ({route}) => {
     const auth = getAuth();
-    const [startingPoint, setStartingPoint] = useState('')
-    const [destination, setDestination] = useState('')
-    const [time, setTime] = useState('')
-    const [date, setDate] = useState('')
-    const [price, setPrice] = useState('')
-    const [notes, setNotes] = useState('')
+    const { startingpoint, destination, time, date, notes} = route.params;
+    
     
 
     const navigation = useNavigation()
+    const user = auth.currentUser?.uid
+    const handleRequest = async () => {
+       
+        const user = auth.currentUser?.uid
+        const docRef = await addDoc(collection(db, "trip"), {
+            user,
+            startingpoint,
+            destination,
+            time,
+            date,
+            notes,
+            seats : -1,
+            complete : false,
+            creationDateTime: new Date(),
+            rideType: 'request'
 
+            
+          });
+        navigation.navigate("Home")
+        
+            }
    
     
     
@@ -35,37 +54,35 @@ const Confirm  = () => {
             <View style = {styles.info}> 
             <View >
                 <Text style={styles.title}>Route</Text>
-                <Text>Place</Text>
+                <Text>{startingpoint} - {destination}</Text>
             </View>
-            <View >
-                <Text style={styles.title}>Price</Text>
-                <Text>Price</Text>
-                </View>
+        
             </View>
             <View style = {styles.info}> 
             <View >
                 <Text style={styles.title}>Date</Text>
-                <Text>November 1</Text>
+                <Text>{date}</Text>
             </View>
             <View >
                 <Text style={styles.title}>Time</Text>
-                <Text>Time</Text>
+                <Text>{time}</Text>
             </View>
             </View>
             <View style={{padding: 10}}>
                 <Text style={styles.title}>Description</Text>
-                <Text>Comments</Text>
+                <Text>{notes}</Text>
             </View>
 
             </View>
             <View
         style = {styles.buttonContainer}>
             <TouchableOpacity
-            
+            onPress={() => navigation.goBack()}
             style ={[styles.button, styles.buttonOutline]}>
                 <Text style={[styles.button, styles.buttonOutlineText]}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
+            onPress={handleRequest}
             style ={styles.button}
             >
                 <Text style={[styles.button, styles.buttonText]}>Confirm</Text>
@@ -77,7 +94,7 @@ const Confirm  = () => {
   )
 }
 
-export default Confirm
+export default ConfirmRequest
 
 const styles = StyleSheet.create({
     container : {

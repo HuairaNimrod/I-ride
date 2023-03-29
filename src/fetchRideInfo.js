@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Pressable, FlatList, Button, Alert, Array, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, Pressable, FlatList, Button, Alert, Array, SafeAreaView, TouchableOpacity } from 'react-native'
 import {firebase} from '../config';
-
+import { useNavigation } from '@react-navigation/native';
 
 const FetchRides = () =>{
-
+  const navigation = useNavigation()
   const [trip, setUsers] = useState([]);
-  const todoRef = firebase.firestore().collection('trip');
+  const todoRef = firebase.firestore().collection('trip').where('seats', '!=', 0);
 
   useEffect(() => {
     async function fetchData(){
@@ -38,10 +38,20 @@ const FetchRides = () =>{
               // style={styles.list}
               data={trip}
               renderItem={({item})=> (
+                <TouchableOpacity
+                onPress={() => item.rideType == 'offered'
+                ? navigation.navigate('Join', {id: item.id})
+                : navigation.navigate('AcceptRide', {id: item.id})}
+                >
+
                 <View style={[ item.rideType == 'offered'
                                   ? styles.list
-                                  : styles.listResquested
+                                  : styles.listRequested
                             ]}> 
+                            {item.rideType == 'offered'
+                ? <Text style={styles.title}>Offer</Text>
+                : <Text style={styles.title}>Request</Text>}
+                    
                     <Text style={styles.title}>Route </Text>
                     <Text style={styles.info}>{item.startingpoint} - {item.destination}</Text>
                     <Text style={styles.title}>Price </Text>
@@ -52,6 +62,7 @@ const FetchRides = () =>{
                     <Text style={styles.title}>Time </Text> */}
                     {/* https://coolors.co/ca2e55-8a6552-462521-bdb246-b8bfcd */}
                 </View>
+                </TouchableOpacity>
              
               )}
 
@@ -79,7 +90,7 @@ const styles = StyleSheet.create({
   borderWidth:1,
   borderColor: '#1853AB'
  },
- listResquested:{
+ listRequested:{
   backgroundColor: '#E68992',
   padding: 10,
   margin: 10,

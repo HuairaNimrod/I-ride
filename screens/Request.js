@@ -85,7 +85,8 @@ const Request  = () => {
         </View>
         <View>
             <TouchableOpacity
-            onPress = {handleRequest}
+            onPress = {() => navigation.navigate('ConfirmRequest', {startingpoint, destination, time, date, notes})}
+            
             
             style ={[styles.button]}>
                 <Text style={[styles.button, styles.buttonText]}>Request</Text>

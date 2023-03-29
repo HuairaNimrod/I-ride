@@ -5,10 +5,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './screens/Login';
 import Register from './screens/Register';
+import Join from './screens/Join';
+import AcceptRide from './screens/AcceptRide'
+import AcceptARide from './screens/AcceptARide';
 import editProfile from './src/editProfile';
 import Request from './screens/Request';
 import Offer from './screens/Offer';
-import Confirm from './screens/Confirm';
+import ConfirmOffer from './screens/ConfirmOffer';
+import ConfirmRequest from './screens/ConfirmRequest';
+import JoinARide from './screens/JoinARide'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +30,12 @@ export default function App() {
         <Stack.Screen name="Edit" component={editProfile} />
         <Stack.Screen name="Request" component={Request} />
         <Stack.Screen name="Offer" component={Offer} />
-        <Stack.Screen name="Confirm" component={Confirm} />
+        <Stack.Screen name="ConfirmOffer" component={ConfirmOffer} />
+        <Stack.Screen name="Join" component={Join} />
+        <Stack.Screen name="AcceptRide" component={AcceptRide} />
+        <Stack.Screen name="JoinARide" component={JoinARide} />
+        <Stack.Screen name="AcceptARide" component={AcceptARide} />
+        <Stack.Screen name="ConfirmRequest" component={ConfirmRequest} />
       </Stack.Navigator>
     </NavigationContainer>
  

@@ -1,7 +1,5 @@
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, View, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
-import {db} from '../config'
-import {addDoc, collection } from "firebase/firestore"; 
 import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,37 +12,46 @@ const Offer  = () => {
     const [date, setDate] = useState('')
     const [price, setPrice] = useState('')
     const [notes, setNotes] = useState('')
-    
+    const [seats, setSeats] = useState('')
 
     const navigation = useNavigation()
 
     const handlePrice = (text) => {
         // Only allow input of decimal numbers
         if (/^\d*\.?\d*$/.test(text)) {
+         const int = parseInt(text, 10);
           setPrice(text);
         }
       };
+    const handleSeats = (text) => {
+        // Only allow input of decimal numbers
+        if (/^\d*\.?\d*$/.test(text)) {
+          const int = parseInt(text, 10);
+          setSeats(int);
+        }
+      };
     
-    const handleOffer = async () => {
+    // const handleOffer = async () => {
        
-        const user = auth.currentUser?.uid
-        const docRef = await addDoc(collection(db, "trip"), {
-            user,
-            startingpoint,
-            destination,
-            time,
-            date,
-            price,
-            notes,
-            complete : false,
-            creationDateTime: new Date(),
-            rideType: 'offered'
+    //     const user = auth.currentUser?.uid
+    //     const docRef = await addDoc(collection(db, "trip"), {
+    //         user,
+    //         startingpoint,
+    //         destination,
+    //         time,
+    //         date,
+    //         price,
+    //         notes,
+    //         seats,
+    //         complete : false,
+    //         creationDateTime: new Date(),
+    //         rideType: 'offered'
 
             
-          });
-        navigation.navigate("Home")
+    //       });
+    //     navigation.navigate("Home")
         
-            }
+    //         }
     
     
   return (
@@ -66,13 +73,6 @@ const Offer  = () => {
             onChangeText = {text => setDestination(text)}
             style = {styles.input}
             />
-            <Text style={styles.label}>Time</Text>
-            <TextInput 
-            placeholder='12:25' 
-            //value={ }
-            onChangeText = {text => setTime(text)}
-            style = {styles.input}
-            />
             <Text style={styles.label}>Date</Text>
             <TextInput 
             placeholder='04/01/2023' 
@@ -80,7 +80,24 @@ const Offer  = () => {
             onChangeText = {text => setDate(text)}
             style = {styles.input}
             />
-            <Text style={styles.label}>To</Text>
+            <Text style={styles.label}>Time</Text>
+            <TextInput 
+            placeholder='12:25' 
+            //value={ }
+            onChangeText = {text => setTime(text)}
+            style = {styles.input}
+            />
+            
+            <Text style={styles.label}>Seats Available</Text>
+            <TextInput 
+            placeholder='4'
+            
+            value={seats}
+            onChangeText={handleSeats}
+            keyboardType="decimal-pad"
+            style = {styles.input}
+            />
+            <Text style={styles.label}>Price</Text>
             <TextInput 
             placeholder='$20'
             
@@ -104,7 +121,7 @@ const Offer  = () => {
         </View>
         <View>
             <TouchableOpacity
-            onPress = {handleOffer}
+            onPress = {() => navigation.navigate('ConfirmOffer', {startingpoint, destination, time, date, price, notes, seats})}
             
             style ={[styles.button]}>
                 <Text style={[styles.button, styles.buttonText]}>Offer</Text>
