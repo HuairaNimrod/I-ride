@@ -2,9 +2,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import Home from '../screens/Home';
-import Rides from '../screens/Rides';
-import Profile from '../screens/Profile';
+
+import HomeNav from './HomeNav';
+import RidesNav from './RidesNav';
+import ProfileNav from './ProfileNav';
 import { nodeModuleNameResolver } from 'typescript';
 
 
@@ -16,7 +17,7 @@ function Navigation() {
         <Tab.Navigator>
             <Tab.Screen
                 name="Home"
-                component={Home}
+                component={HomeNav}
               
                 options={{
                 tabBarIcon: ({ color, size }) => (
@@ -27,7 +28,7 @@ function Navigation() {
             />
             <Tab.Screen
                 name="Rides"
-                component={Rides}
+                component={RidesNav}
                 options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="ios-list" color={color} size={size} />
@@ -37,7 +38,7 @@ function Navigation() {
             />
                  <Tab.Screen
                 name="Profile"
-                component={Profile}
+                component={ProfileNav}
                 
                 options={{
                 tabBarIcon: ({ color, size }) => (

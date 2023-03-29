@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Pressable, FlatList, Button, Alert, Array, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Pressable,ScrollView, FlatList, Button, Alert, Array, SafeAreaView, TouchableOpacity } from 'react-native'
 import {firebase} from '../config';
 import { useNavigation } from '@react-navigation/native';
 
 const FetchRides = () =>{
   const navigation = useNavigation()
   const [trip, setUsers] = useState([]);
-  const todoRef = firebase.firestore().collection('trip').where('seats', '!=', 0);
+  const todoRef = firebase.firestore().collection('trip').where('seats', '!=', 0)
+ 
+  
 
   useEffect(() => {
     async function fetchData(){
@@ -15,13 +17,16 @@ const FetchRides = () =>{
               querySnapshot =>{
                 const ride = []
                 querySnapshot.forEach((doc)=>{
-                  const { startingpoint, destination, rideType, price, seats, seatAvailable} = doc.data()
+                  const { startingpoint, destination, rideType, price, driver} = doc.data()
+                 
                   ride.push({
                     id: doc.id,
                     startingpoint,
                     destination,
                     price,
                     rideType, 
+                    driver,
+                    
                     
                   })
                 })
@@ -51,16 +56,18 @@ const FetchRides = () =>{
                             {item.rideType == 'offered'
                 ? <Text style={styles.title}>Offer</Text>
                 : <Text style={styles.title}>Request</Text>}
+                
                     
                     <Text style={styles.title}>Route </Text>
                     <Text style={styles.info}>{item.startingpoint} - {item.destination}</Text>
-                    <Text style={styles.title}>Price </Text>
-                    <Text style={styles.info}>${item.price}</Text>
-
-                    {/* <Text style={styles.title}>Date </Text>
-
-                    <Text style={styles.title}>Time </Text> */}
-                    {/* https://coolors.co/ca2e55-8a6552-462521-bdb246-b8bfcd */}
+                    {item.rideType == 'offered'
+                ? <>
+                  <Text style={styles.title}>Price </Text>
+                  <Text style={styles.title}> ${item.price} </Text>
+                  </>
+                
+                : <></>}
+                   
                 </View>
                 </TouchableOpacity>
              

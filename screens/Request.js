@@ -20,7 +20,7 @@ const Request  = () => {
        
         const user = auth.currentUser?.uid
         const docRef = await addDoc(collection(db, "trip"), {
-            user,
+            riders: [user],
             startingpoint,
             destination,
             time,
