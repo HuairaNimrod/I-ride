@@ -96,7 +96,7 @@ const Join  = ({route}) => {
             <View
         style = {styles.buttonContainer}>
             <TouchableOpacity
-            onPress={() => navigation.navigate('Rides')}
+            onPress={() => navigation.goBack()}
             
             style ={[styles.button, styles.buttonOutline]}>
                 <Text style={[styles.button, styles.buttonOutlineText]}>Back</Text>

@@ -22,7 +22,7 @@ const Edit = () =>{
        
     await updateDoc(docRef, { firstName, lastName, phone, username })
     .then(
-        navigation.navigate('Profile')
+        navigation.navigate('ProfilePage')
     )
     
   }

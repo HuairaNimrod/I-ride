@@ -16,7 +16,16 @@ const Request  = () => {
     
 
     const navigation = useNavigation()
+    const handleRequestButton = () =>  {
+        if (startingpoint.trim() === '' || destination.trim() === '' || time.trim() === '' || date.trim() === '') {
+            alert('Please complete all fields');
+            return;
+        }
+        navigation.navigate('ConfirmRequest', {startingpoint, destination, time, date, notes})
+
+    }
     const handleRequest = async () => {
+        
        
         const user = auth.currentUser?.uid
         const docRef = await addDoc(collection(db, "trip"), {
@@ -85,7 +94,7 @@ const Request  = () => {
         </View>
         <View>
             <TouchableOpacity
-            onPress = {() => navigation.navigate('ConfirmRequest', {startingpoint, destination, time, date, notes})}
+            onPress = {handleRequestButton}
             
             
             style ={[styles.button]}>

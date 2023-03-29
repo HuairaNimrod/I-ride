@@ -33,7 +33,7 @@ const ConfirmOffer  = ({route}) => {
 
             
           });
-        navigation.navigate("Home")
+        navigation.navigate("HomePage")
         
             }
    

@@ -32,7 +32,7 @@ const ConfirmRequest  = ({route}) => {
 
             
           });
-        navigation.navigate("Home")
+        navigation.navigate("HomePage")
         
             }
    

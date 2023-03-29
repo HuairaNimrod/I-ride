@@ -27,6 +27,8 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in 
+            setEmail('')
+            setPassword('')
             const user = userCredential.user;
             // if (user.emailVerified) {
             //     navigation.navigate('Navigation')
@@ -50,13 +52,13 @@ const Login = () => {
         <View style={styles.inputContainer}>
             <TextInput 
             placeholder='Email' 
-            //value={ }
+            value={email}
             onChangeText = {text => setEmail(text)}
             style = {styles.input}
             />
             <TextInput 
             placeholder='Password' 
-            //value={ }
+            value={password}
             onChangeText = {text => setPassword(text)}
             style = {styles.input}
             secureTextEntry

@@ -25,7 +25,7 @@ const AcceptARide  = ({route}) => {
             seats
           });
         
-        navigation.navigate("Rides")
+        navigation.navigate("RidesPage")
         
             }
 
@@ -83,7 +83,7 @@ const AcceptARide  = ({route}) => {
         </View>
         <View>
         <TouchableOpacity
-            onPress={() => navigation.navigate('Rides')}
+            onPress={() => navigation.goBack()}
             
             style ={[styles.button, styles.buttonOutline]}>
                 <Text style={[styles.button, styles.buttonOutlineText]}>Back</Text>
@@ -121,6 +121,20 @@ const styles = StyleSheet.create({
         
 
     },
+    buttonOutline :{
+        backgroundColor: '#C2C2C2',
+        marginTop: 5,
+        borderColor: '#353535',
+        borderWidth: 1,
+    },
+    buttonOutlineText : {
+      backgroundColor: '#C2C2C2',
+      fontWeight: '700',
+      fontSize: 16,
+      width: '99%',
+      
+  
+  },
     input: {
         backgroundColor: 'white',
         paddingHorizontal: 15,

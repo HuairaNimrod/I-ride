@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, View, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {db} from '../config'
-import {doc, getDoc, addDoc, collection, updateDoc} from "firebase/firestore"; 
+import {doc, getDoc, updateDoc} from "firebase/firestore"; 
 import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,7 +23,7 @@ const JoinARide  = ({route}) => {
           riders: [user]
         });
       
-      navigation.navigate("Rides")
+      navigation.navigate("RidesPage")
       
           }
     
@@ -91,7 +91,7 @@ const JoinARide  = ({route}) => {
         </View>
         <View>
         <TouchableOpacity
-            onPress={() => navigation.navigate('Rides')}
+            onPress={() => navigation.goBack()}
             
             style ={[styles.button, styles.buttonOutline]}>
                 <Text style={[styles.button, styles.buttonOutlineText]}>Back</Text>
@@ -152,6 +152,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
     },
+    buttonOutline :{
+      backgroundColor: '#C2C2C2',
+      marginTop: 5,
+      borderColor: '#353535',
+      borderWidth: 1,
+  },
+  buttonOutlineText : {
+    backgroundColor: '#C2C2C2',
+    fontWeight: '700',
+    fontSize: 16,
+    width: '99%',
+    
+
+},
     
     buttonText: {
         color: 'white',

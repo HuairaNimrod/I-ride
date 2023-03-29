@@ -30,7 +30,14 @@ const Offer  = () => {
           setSeats(int);
         }
       };
-    
+    const handleOfferButton = () => {
+        if (startingpoint.trim() === '' || destination.trim() === '' || time.trim() === '' || date.trim() === '' || price.trim() === '' || seats.trim() === '') {
+            alert('Please complete all fields');
+            return;
+        }
+        navigation.navigate('ConfirmOffer', {startingpoint, destination, time, date, price, notes, seats})
+
+    }
     // const handleOffer = async () => {
        
     //     const user = auth.currentUser?.uid
@@ -121,7 +128,7 @@ const Offer  = () => {
         </View>
         <View>
             <TouchableOpacity
-            onPress = {() => navigation.navigate('ConfirmOffer', {startingpoint, destination, time, date, price, notes, seats})}
+            onPress = {handleOfferButton}
             
             style ={[styles.button]}>
                 <Text style={[styles.button, styles.buttonText]}>Offer</Text>
